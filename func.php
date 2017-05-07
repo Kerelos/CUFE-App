@@ -157,6 +157,112 @@ function calculate_semester_credits($Student_ID,$Semester_ID)
 //Suggested TimeTable Functions
 /* ************************************************************************** */
 
+function gpaCheck($Course_ID)
+{
+	$SumSelectedCredits=0;
+	
+	$row=DB_Manager::Query("SELECT Course_Credits FROM Course WHERE Course_ID=".$Course_ID)->fetch_assoc();
+	$Course_Credits=$row['Course_Credits'];
+	
+	$row=DB_Manager::Query("SELECT Student_GPA FROM Student WHERE Student_ID=".getID())->fetch_assoc();
+	$Student_GPA=$row['Student_GPA'];
+	
+	$row=DB_Manager::Query("SELECT Max_Credits FROM Semester WHERE Is_Current=1")->fetch_assoc();
+	$Max_Credits=$row['Max_Credits'];
+	
+	if($Max_Credits==21)
+	{
+		if($Student_GPA<3 && $Student_GPA>=2)
+			$Max_Credits=18;
+		else if($Student_GPA<2)
+			$Max_Credits=14;	
+	}
+	
+	$SelectedCourses="";
+	if(isset($_SESSION['SuggestedSelectedCourses']))
+	{
+		foreach($_SESSION['SuggestedSelectedCourses'] as $record)
+		{
+			$SelectedCourses=$SelectedCourses.$record.",";
+		}
+		$SelectedCourses=substr($SelectedCourses, 0, -1);
+	}
+	else
+		$SelectedCourses="NULL";
+		
+	$SQL="SELECT SUM(C.Course_Credits) as SumSelectedCredits FROM Course C
+			WHERE C.Course_ID in (".$SelectedCourses.")";
+	
+	$query=DB_Manager::Query($SQL);
+	if($query)
+	{
+		$row=$query->fetch_assoc();	
+		$SumSelectedCredits=$row['SumSelectedCredits'];
+	}
+	if($SumSelectedCredits+$Course_Credits<=$Max_Credits)
+		return true;
+		
+	return false;
+}
+
+function canRegister($Course_ID)
+{
+	$Course_Credits=0;
+	$SumSelectedCredits=0;
+	$SumTakenCredits=0;
+	$Req_Credits=0;
+	
+	$SelectedCourses="";
+	if(isset($_SESSION['SuggestedSelectedCourses']))
+	{
+		foreach($_SESSION['SuggestedSelectedCourses'] as $record)
+		{
+			$SelectedCourses=$SelectedCourses.$record.",";
+		}
+		$SelectedCourses=substr($SelectedCourses, 0, -1);
+	}
+	else
+		$SelectedCourses="NULL";
+	$SQL="SELECT C.Type_ID, P.Req_Credits, C.Course_Credits FROM Course C, Program_Type P, Student S
+			WHERE C.Course_ID=".$Course_ID." AND P.Program_ID=S.Program_ID AND P.Type_ID=C.Type_ID AND S.Student_ID=".getID().";
+	";
+	
+	$query=DB_Manager::Query($SQL);
+	if($query)
+	{
+		$row=$query->fetch_assoc();
+		$Type_ID=$row['Type_ID'];
+		$Req_Credits=$row['Req_Credits'];
+		$Course_Credits=$row['Course_Credits'];
+	}
+	$SQL="SELECT SUM(C.Course_Credits) as SumSelectedCredits FROM Course C
+			WHERE C.Course_ID in (".$SelectedCourses.") AND C.Type_ID=".$Type_ID;
+	
+	$query=DB_Manager::Query($SQL);
+	if($query)
+	{
+		$row=$query->fetch_assoc();	
+		$SumSelectedCredits=$row['SumSelectedCredits'];
+	}
+	
+	$SQL="SELECT SUM(C.Course_Credits) as SumTakenCredits FROM Course C, Grades G
+			WHERE C.Course_ID=G.Course_ID AND G.Grade IS NOT NULL AND C.Type_ID=".$Type_ID ." AND G.Student_ID=".getID();
+			
+	$query=DB_Manager::Query($SQL);
+	if($query)
+	{
+		$row=$query->fetch_assoc();
+		if(empty($row['SumTakenCredits']))
+			$SumTakenCredits=0;
+		else
+			$SumTakenCredits=$row['SumTakenCredits'];
+	}
+	if(($SumSelectedCredits+$SumTakenCredits)<$Req_Credits)
+		return true;
+		
+	return false;
+}
+
 function PrintSchedule($arr)
 {
 	$Week_Days=array("Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday");
