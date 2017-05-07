@@ -22,7 +22,7 @@
 					while($row=$query->fetch_assoc())
 					{
 						$temp=getPrerequisites($row['Course_ID']);
-						if($temp && arePassed($temp))
+						if($temp && arePassed($temp) && gpaCheck($row['Course_ID']) && canRegister($row['Course_ID']))
 							array_push($AvailableCourses, $row['Course_ID']);
 					}
 					
