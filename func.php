@@ -12,7 +12,7 @@ session_start();
 function Location($url)
 
 {
-	echo("<script>window.location='".$url."'</script>");
+	echo("<script>window.location.replace('".$url."')</script>");
 }
 
 function Message($msg)
@@ -485,63 +485,52 @@ function printSelectedSuggested()
 /* ************************************************************************** */
 
 function calc_quality($Grade, $Course_Credits)
+
 {	
+	$GPA_WEIGHT=0;
 	if($Grade=="A+"||$Grade=="A")
-	{
 		$GPA_WEIGHT="4" ; 
-	}
+
 	elseif($Grade=="A-")
-	{
 		$GPA_WEIGHT="3.7" ; 
-	}
+
 	elseif($Grade=="B+")
-	{
 		$GPA_WEIGHT="3.3" ; 
-	}
+
 	elseif($Grade=="B")
-	{
 		$GPA_WEIGHT="3.0" ; 
-	}
+
 	elseif($Grade=="B-")
-	{
 		$GPA_WEIGHT="2.7" ; 
-	}
+
 	elseif($Grade=="C+")
-	{
 		$GPA_WEIGHT="2.3" ; 
-	}
+		
 	elseif($Grade=="C")
-	{
 		$GPA_WEIGHT="2.0" ; 
-	}
+
 	elseif($Grade=="C-")
-	{
 		$GPA_WEIGHT="1.7" ; 
-	}
+
 	elseif($Grade=="D+")
-	{
 		$GPA_WEIGHT="1.3" ; 
-	}
+
 	elseif($Grade=="D")
-	{
 		$GPA_WEIGHT="1.0" ; 
-	}
+
 	elseif($Grade=="D-")
-	{
 		$GPA_WEIGHT="0.7" ; 
-	}
+
 	elseif($Grade=="F+")
-	{
 		$GPA_WEIGHT="0.3" ; 
-	}
+
 	elseif($Grade=="F")
-	{
 		$GPA_WEIGHT="0" ; 
-	}
 
 	$Quality_points=$GPA_WEIGHT*$Course_Credits ; 
-	
+
 	return $Quality_points ;
+
 } 
 
 /* ************************************************************************** */
