@@ -70,8 +70,8 @@
 			if($Type_Name!=$Previous_Type_Name)
 
 			{
-				$Type_Actual=Type_Actual_Credits($Student_ID, $Type_ID);
-				$Type_Total=Type_Total_Credits($Student_ID, $Type_ID);
+				$Type_Actual=Type_Actual_Credits($Type_ID);
+				$Type_Total=Type_Total_Credits($Type_ID);
 				
 				$Sum_Total_Credits+=$Type_Actual;
 				$Sum_Actual_Credits+=$Type_Actual;
