@@ -662,9 +662,9 @@ function Type_Actual_Credits($Type_ID)
 		FROM 
 		Offered_For JOIN Student ON Student.Program_ID = Offered_For.Program_ID
 		JOIN Course ON Offered_For.Course_ID = Course.Course_ID
-		JOIN Course_Type ON Course.Type_ID = Course_Type.Type_ID AND Course_Type.Type_ID=".getID()."
+		JOIN Course_Type ON Course.Type_ID = Course_Type.Type_ID AND Course_Type.Type_ID=".$Type_ID."
 		LEFT JOIN Grades ON Student.Student_ID = Grades.Student_ID AND Grades.Course_ID = Course.Course_ID
-		WHERE Student.Student_ID = '".$Student_ID."' ORDER BY Course.Type_ID, Grades.Grade";
+		WHERE Student.Student_ID = '".getID()."' ORDER BY Course.Type_ID, Grades.Grade";
 		
 	$query=DB_Manager::Query($sql_final);
 	$Total_Credits=0;
