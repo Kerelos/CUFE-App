@@ -603,7 +603,7 @@ function printSelectedSuggested()
 				echo($row['Course_Credits']);
 				echo('</td>');
 				$TotalCredits+=$row['Course_Credits'];
-			echo("<td><input type='radio' name='RemoveCourse' value='".$Course."' id='login_input'></td>");
+			echo("<td><input type='radio' name='RemoveCourse' value='".$Course."'></td>");
 			
 		echo('</tr>');
 	}
