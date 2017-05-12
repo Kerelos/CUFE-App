@@ -10,7 +10,7 @@
 <body>
 <table id="MainTable" align="center">
     <tr>
-    	<td id="Header">Sugggested TimeTable</td>
+    	<td id="Header">Suggested TimeTable</td>
     </tr>
     <tr>
     	<td height="90%">
