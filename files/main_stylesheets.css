@@ -115,6 +115,10 @@ img {
 	font-weight:600;
 }
 
+input[type="radio"] {
+	width:4vw;
+}
+
 input[type=text]:focus {
 	border-color:#333;
 }
