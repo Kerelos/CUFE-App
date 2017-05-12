@@ -23,6 +23,7 @@ $Week_Days=array("Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 		<?php 
 	$Student_ID=getID();
+	DB_Manager::Query("set names utf8");
 	$sql="SELECT Student_Code,Student_Name_EN,Student_Credits,Student_GPA FROM Student WHERE Student_ID='".$Student_ID."';";
 	$run=DB_Manager::Query($sql);
 
