@@ -137,14 +137,15 @@ function encrypt_decrypt($action, $string)
 /* ************************************************************************** */
 
 function calculate_semester_credits($Student_ID,$Semester_ID)
-
 {		
-	$sql="SELECT SUM(Course_Credits) FROM Course C, Enrolled_In E
-	WHERE E.Student_ID=".$Student_ID." AND E.Semester_ID=".$Semester_ID." AND C.Course_ID=E.Course_ID;";
+	$sql="SELECT SUM(Course_Credits) FROM Course C, (
+	SELECT DISTINCT Course_ID FROM Enrolled_In E
+	WHERE E.Student_ID=".$Student_ID." AND E.Semester_ID=".$Semester_ID.") AS Sub
+	WHERE Sub.Course_ID=C.Course_ID;
+	";
 
 	$run=DB_Manager::Query($sql);
 	$row=$run->fetch_assoc();
-
 	$sum=$row['SUM(Course_Credits)'];
 
 	if(!empty($sum))
