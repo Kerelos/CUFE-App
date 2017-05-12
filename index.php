@@ -53,19 +53,19 @@
                 
                 
                 <tr>
-                    <td><a href="info.php"><img id="icon" src="files/images/info.png" /></a></td>
-                    <td class="Hspacer"></td>
                     <td><a href="announcements.php"><img id="icon" src="files/images/announcements.png" /></a></td>
                     <td class="Hspacer"></td>
                     <td><a href="logout.php"><img id="icon" src="files/images/logout.png" /></a></td>
+                    <td class="Hspacer"></td>
+                    <td></td>
                 </tr>
                 
                 <tr>
-                    <td><span id="icon_txt">Info. and Warnings</span></td>
-                    <td class="Hspacer"></td>
                     <td><span id="icon_txt">Latest News</span></td>
                     <td class="Hspacer"></td>
                     <td><span id="icon_txt">Logout</span></td>
+                    <td class="Hspacer"></td>
+                    <td></td>
                  </tr>
                  
                 <tr>
