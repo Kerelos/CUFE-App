@@ -258,7 +258,7 @@ function canRegister($Course_ID)
 		else
 			$SumTakenCredits=$row['SumTakenCredits'];
 	}
-	if(($SumSelectedCredits+$SumTakenCredits)<$Req_Credits)
+	if(($SumSelectedCredits+$SumTakenCredits)<=$Req_Credits)
 		return true;
 		
 	return false;
@@ -519,13 +519,17 @@ function Prereq($Courses)
 		foreach($Courses as $Course)
 		{
 			$query=DB_Manager::Query("SELECT Prerequisite_ID as pID, Prerequisite_Hours as pH FROM Prerequisite WHERE Course_ID=".$Course['pID'] );
+			$test_bool=false;
 			while($row=$query->fetch_assoc())
 			{
 				if($row['pH']>$Student_Credits)
-					return -1;
+					return -2;
 				if($row['pID']!=0)
 				 	array_push($Prerequisites, array("pID"=>$row['pID']));
+				$test_bool=true;
 			}
+			if(!$test_bool)
+				return -1;
 			
 		}
 		return $Prerequisites;
@@ -538,7 +542,14 @@ function getPrerequisites($Course_ID)
 	while($Preq=Prereq($Preq))
 	{
 		if($Preq==-1)
-			return false;
+			if(empty($Prerequisites))
+				return -1;
+			else
+				return $Prerequisites;
+			
+		if($Preq==-2)
+			return -2;
+			
 		foreach($Preq as $p)
 			array_push($Prerequisites, $p['pID']);
 	}
@@ -556,6 +567,21 @@ function arePassed($Courses)
 	}
 	
 	return true;
+}
+
+function getAvailableCourses()
+{
+	$AvailableCourses=array();					
+						
+	$SQL="SELECT C.Course_ID FROM Course C, Offered_For OF, Student S , Taught_In TI, Semester Sem WHERE C.Course_ID=TI.Course_ID AND TI.Semester_ID=Sem.Semester_ID AND Sem.Is_Current=1 AND C.Course_ID=OF.Course_ID AND S.Student_ID=".getID()." AND S.Program_ID=OF.Program_ID AND OF.Course_ID Not In (SELECT Course_ID FROM Grades WHERE Student_ID=".getID().");";
+	$query=DB_Manager::Query($SQL);
+	while($row=$query->fetch_assoc())
+	{
+		$temp=getPrerequisites($row['Course_ID']);
+		if($temp==-1 || (!empty($temp) && $temp!=-2 && arePassed($temp) && gpaCheck($row['Course_ID']) && canRegister($row['Course_ID'])))
+			array_push($AvailableCourses, $row['Course_ID']);
+	}
+	return $AvailableCourses;
 }
 
 function printSelectedSuggested()
@@ -584,6 +610,21 @@ function printSelectedSuggested()
 	
 	echo('</table>');
 	echo('<br><div id="Suggested_Div">Selected Courses Credits: '.$TotalCredits.'</div>');	
+}
+
+function printFreshman($Slot_Group)
+{
+	$Slots=array();
+	
+	$SQL="
+	SELECT T.Slot_ID FROM Time_Slot T, Offered_In OI, Offered_For OF
+	WHERE T.Slot_Group=".$Slot_Group." AND OF.Program_ID=0 AND OF.Course_ID=OI.Course_ID AND OI.Slot_ID=T.Slot_ID;";
+	
+	$query=DB_Manager::Query($SQL);
+	while($row=$query->fetch_assoc())
+		array_push($Slots, array("Slot_ID"=>$row['Slot_ID']));
+
+	PrintSchedule($Slots);
 }
 
 
