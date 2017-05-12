@@ -15,7 +15,7 @@
   <tr>
     	<td height="90%">
         	<div id="Main_Body">
-		 <table id="Classwork_Table">
+		 <center><table id="Classwork_Table">
             <tr>
 		<th>Subject Code</th><th>Subject Name</th><th>Midterm</th><th>CourseWork</th>
    	    </tr>
@@ -36,7 +36,7 @@
 		echo('</tr>');	
 	}
 ?>
-    </table>
+		</table></center>
     </div>
     </td></tr>
     </table>
