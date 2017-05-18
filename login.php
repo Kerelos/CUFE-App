@@ -8,7 +8,10 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['submi
 	if(Login($_POST['username'], $_POST['password']))
 		goBack();	//Go to the previous page which will be the index.php (Homepage)
 	else
+	{
 		Message('Username or Password may be incorrect , Try again!');
+		goBack();
+	}
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
