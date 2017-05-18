@@ -579,7 +579,7 @@ function getAvailableCourses()
 	while($row=$query->fetch_assoc())
 	{
 		$temp=getPrerequisites($row['Course_ID']);
-		if(($temp==-1 && canRegister($row['Course_ID'])&& gpaCheck($row['Course_ID'])) || (!empty($temp) && $temp!=-2 && $temp!=-1 && arePassed($temp) && gpaCheck($row['Course_ID']) && canRegister($row['Course_ID'])))
+		if(($temp==-1 && canRegister($row['Course_ID']) && gpaCheck($row['Course_ID'])) || (!empty($temp) && $temp!=-2 && $temp!=-1 && arePassed($temp) && gpaCheck($row['Course_ID']) && canRegister($row['Course_ID'])))
 			array_push($AvailableCourses, $row['Course_ID']);
 	}
 	return $AvailableCourses;
