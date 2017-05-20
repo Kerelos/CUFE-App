@@ -116,8 +116,8 @@ img {
 }
 
 input[type="radio"] {
-	width:4vw;
-	height:4vw;
+	width:2.5vw;
+	height:2.5vw;
 }
 
 input[type=text]:focus {
