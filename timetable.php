@@ -8,14 +8,14 @@ $Week_Days=array("Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>TimeTable</title>
+<title>Timetable</title>
 <link type="text/css" rel="stylesheet" href="files/main_stylesheets.css" />
 <script src="js_func.js" language="javascript"></script>
 </head>
 <body>
 <table id="MainTable" align="center">
     <tr>
-    	<td id="Header">TimeTable</td>
+    	<td id="Header">Timetable</td>
     </tr>
     <tr>
     	<td height="90%">
