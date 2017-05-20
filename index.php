@@ -20,9 +20,9 @@
                     <td><a href="profile.php"><img id="icon" src="files/images/profile.png" /></a></td>
                 </tr>
                 <tr>
-                    <td><span id="icon_txt">TimeTable</span></td>
+                    <td><span id="icon_txt">Timetable</span></td>
                     <td class="Hspacer"></td>
-                    <td><span id="icon_txt">Suggested TimeTable</span></td>
+                    <td><span id="icon_txt">Suggested Timetable</span></td>
                     <td class="Hspacer"></td>
                     <td><span id="icon_txt">Profile</span></td>
                  </tr>
